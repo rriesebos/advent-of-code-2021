@@ -53,6 +53,6 @@ with open('input.txt') as f:
     def partial_sum(n):
         return n * (n + 1) // 2
 
-    mean = int(statistics.mean(positions))
-    print(min(sum([int(partial_sum(abs(pos - mean))) for pos in positions]),
-              sum([int(partial_sum(abs(pos - (mean + 1)))) for pos in positions])))
+    mean = round(statistics.mean(positions))
+    print(min(sum([int(partial_sum(abs(pos - (mean - 1)))) for pos in positions]),
+              sum([int(partial_sum(abs(pos - mean))) for pos in positions])))
