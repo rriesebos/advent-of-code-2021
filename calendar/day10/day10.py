@@ -50,12 +50,11 @@ with open('input.txt') as f:
 
     lines = f.readlines()
 
-    completion_strings = []
+    scores = []
     for line in lines:
         chunks = line.replace('\n', '')
 
         stack = []
-        corrupt = False
         for c in chunks:
             if c in CHARACTER_PAIRS:
                 stack.append(c)
@@ -64,19 +63,14 @@ with open('input.txt') as f:
                 closing_symbol = CHARACTER_PAIRS[opening_symbol]
                 # Incorrect closing symbol, chunk is corrupted
                 if closing_symbol != c:
-                    corrupt = True
                     break
-
-        if not corrupt:
-            # Add completion string if the line is not corrupt
-            completion_strings.append([CHARACTER_PAIRS[c] for c in reversed(stack)])
-
-    scores = []
-    for completion_string in completion_strings:
-        score = 0
-        for c in completion_string:
-            score *= 5
-            score += CHARACTER_SCORE[c]
-        scores.append(score)
+        else:
+            # Add score if the line is not corrupt
+            score = 0
+            while stack:
+                opening_symbol = stack.pop()
+                closing_symbol = CHARACTER_PAIRS[opening_symbol]
+                score = score * 5 + CHARACTER_SCORE[closing_symbol]
+            scores.append(score)
 
     print(median(scores))
