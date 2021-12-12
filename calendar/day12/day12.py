@@ -1,13 +1,15 @@
 # https://adventofcode.com/2021/day/12
 
-connections = {}
+from collections import defaultdict
+
+connections = defaultdict(list)
 with open('input.txt') as f:
     lines = f.readlines()
 
     for line in lines:
-        start, to = line.replace('\n', '').split('-')
-        connections[start] = connections[start] + [to] if start in connections else [to]
-        connections[to] = connections[to] + [start] if to in connections else [start]
+        start, to = line.strip().split('-')
+        connections[start].append(to)
+        connections[to].append(start)
 
 
 # Part 1
@@ -44,7 +46,7 @@ def find_paths(connections, node, visited, visited_twice, path, paths):
         for neighbour in connections[node]:
             if visited[neighbour] == 0:
                 find_paths(connections, neighbour, visited, visited_twice, path, paths)
-            elif neighbour != 'start' and neighbour != 'end' and not visited_twice:
+            elif neighbour not in ['start', 'end'] and not visited_twice:
                 # If the neighbour has been visited, and no node has been visited twice
                 # recur with the neighbour as visited twice
                 find_paths(connections, neighbour, visited, neighbour, path, paths)
