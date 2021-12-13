@@ -9,7 +9,7 @@ def pretty_print_dots(dots: set):
     for y in range(y_max):
         for x in range(x_max):
             if (x, y) in dots:
-                print('#', end=' ')
+                print('▇', end=' ')
             else:
                 print('.', end=' ')
 
