@@ -28,7 +28,7 @@ print(frequencies.most_common()[0][1] - frequencies.most_common()[-1][1])
 
 # Part 2
 pair_frequencies = {k: polymer_template.count(k) for k in pair_insertion_rules.keys()}
-frequencies = {k: polymer_template.count(k) for k in set(pair_insertion_rules.values())}
+frequencies = Counter(polymer_template)
 for step in range(40):
     new_pair_frequencies = {k: 0 for k in pair_insertion_rules.keys()}
     for pair, count in pair_frequencies.items():
