@@ -81,9 +81,9 @@ OPERATOR_MAP = {
     '1': lambda li: prod(li),
     '2': lambda li: min(li),
     '3': lambda li: max(li),
-    '5': lambda li: 1 if li[0] > li[1] else 0,
-    '6': lambda li: 1 if li[0] < li[1] else 0,
-    '7': lambda li: 1 if li[0] == li[1] else 0
+    '5': lambda li: int(li[0] > li[1]),
+    '6': lambda li: int(li[0] < li[1]),
+    '7': lambda li: int(li[0] == li[1])
 }
 
 
@@ -98,8 +98,7 @@ def evaluate_expression(expression: list):
             # Perform operation
             operation = OPERATOR_MAP[token]
             result = operation(stack)
-            stack.clear()
-            stack.append(result)
+            stack = [result]
         else:
             # Add integer
             stack.append(token)
